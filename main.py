@@ -66,3 +66,7 @@ def monitor_youtube_tabs(poll_interval: int = 5):
         except Exception as e:
             print(f"Error during monitoring: {e}")
         time.sleep(poll_interval)
+
+
+if __name__ == "__main__":
+    monitor_youtube_tabs()
