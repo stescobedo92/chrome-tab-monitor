@@ -1,7 +1,6 @@
 # chrome-tab-monitor
 
-A small Python utility that connects to Chrome/Chromium via the DevTools Protocol
-and automatically closes any tab whose title contains "youtube".
+A Python utility that connects to Chrome/Chromium via the DevTools Protocol and automatically closes any tab whose title matches one or more user-provided keywords.
 
 ## Prerequisites
 
@@ -9,29 +8,26 @@ and automatically closes any tab whose title contains "youtube".
 - `requests` library (`pip install requests`)
 - Chrome/Chromium started with remote debugging enabled:
 ```bash
-  google-chrome --remote-debugging-port=9222
+mkdir /tmp/chrome-debug-profile && cd /tmp/chrome-debug-profile
+google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-debug-profile --disable-features=CloudPolicyInvalidation,OptimizationGuideModelFetcher --enable-logging --v=1
 ```
 
 ## Installation
 
 - Clone this repository:
 ```bash
-  git clone git@github.com:stescobedo92/chrome-tab-monitor.git
-  cd chrome-tab-monitor
+git clone git@github.com:stescobedo92/chrome-tab-monitor.git
+cd chrome-tab-monitor
 ```
-- Install dependencies:
+- (Optional) Create a virtualenv and install dependencies:
 ```bash
-  pip install -r requirements.txt
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
 ## Usage
 ```bash
-  python monitor_tabs.py
-```
-
-You will see output like:
-
-```bash
-  Monitoring YouTube tabs every 5 seconds...
-  Closed YouTube tab: YouTube – Home
+# Close any tab with "youtube" or "programming" or "github.com" in its title:
+python monitor_tabs.py youtube programming github.com
 ```
