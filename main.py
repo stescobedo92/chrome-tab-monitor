@@ -44,3 +44,25 @@ def close_tab(target_id: str, port: int = 9222) -> bool:
         return True
     except requests.RequestException:
         return False
+
+
+def monitor_youtube_tabs(poll_interval: int = 5):
+    """
+    Continuously monitors open Chrome/Chromium tabs and closes any whose title contains 'youtube'.
+
+    Args:
+        poll_interval (int): Number of seconds to wait between monitoring cycles (default: 5).
+    """
+    print(f"Monitoring YouTube tabs every {poll_interval} seconds...")
+    while True:
+        try:
+            tabs = get_tabs()
+            for tab in tabs:
+                title = tab.get('title', '')
+                if 'youtube' in title.lower():
+                    tid = tab.get('id', '')
+                    if tid and close_tab(tid):
+                        print(f"Closed YouTube tab: {title}")
+        except Exception as e:
+            print(f"Error during monitoring: {e}")
+        time.sleep(poll_interval)
